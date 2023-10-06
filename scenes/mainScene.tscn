@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwf0mdywbsaqk"]
+[gd_scene load_steps=9 format=3 uid="uid://dwf0mdywbsaqk"]
 
 [ext_resource type="Texture2D" uid="uid://b7rlpnvehcq1t" path="res://titlemap/monochrome_tilemap_transparent_packed.png" id="1_nh1hs"]
 [ext_resource type="Texture2D" uid="uid://d3veyh15pujkr" path="res://icon.svg" id="2_0sdrn"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="2_6udpu"]
+[ext_resource type="Script" path="res://scripts/DeathBarrior.gd" id="4_epoto"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ifem1"]
 texture = ExtResource("1_nh1hs")
@@ -1242,6 +1243,9 @@ sources/0 = SubResource("TileSetAtlasSource_ifem1")
 [sub_resource type="CircleShape2D" id="CircleShape2D_xiyrf"]
 radius = 8.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pyhyx"]
+size = Vector2(1192, 208)
+
 [node name="Node2D" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -1266,3 +1270,14 @@ texture = ExtResource("2_0sdrn")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(107.08, -196.875)
+
+[node name="DeathBarrior" type="Node2D" parent="."]
+script = ExtResource("4_epoto")
+
+[node name="Area2D" type="Area2D" parent="DeathBarrior"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathBarrior/Area2D"]
+position = Vector2(332, -80)
+shape = SubResource("RectangleShape2D_pyhyx")
+
+[connection signal="body_entered" from="DeathBarrior/Area2D" to="DeathBarrior" method="_on_area_2d_body_entered"]
